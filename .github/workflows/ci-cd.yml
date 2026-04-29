@@ -38,3 +38,8 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE }}
+      - name: Deploy no Render
+        run: |
+          curl -s -X POST "https://api.render.com/v1/services/srv-d7p29nosfn5c73frusbg/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json"
