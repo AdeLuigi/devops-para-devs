@@ -1,0 +1,10 @@
+### Listar todas as tasks
+GET https://tasks-api-ralh.onrender.com/tasks
+
+### Criar nova task
+POST https://tasks-api-ralh.onrender.com/tasks
+Content-Type: application/json
+
+{
+  "title": "Minha nova task 2"
+}
