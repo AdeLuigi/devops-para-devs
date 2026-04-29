@@ -4,3 +4,5 @@ run:
 	docker run -p 3001:3001 tasks-api
 stop:
 	docker stop $(docker ps -q --filter ancestor=tasks-api)
+test:
+	cd app && npm test

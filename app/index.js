@@ -11,7 +11,11 @@ app.post('/tasks', (req, res) => {
   res.status(201).json(req.body);
 });
 
-app.listen(3001, () => console.log('rodando na porta 3001'));
+if (require.main === module) {
+  app.listen(3001, () => console.log('rodando na porta 3001'));
+}
+
+module.exports = app;
 
 
 
