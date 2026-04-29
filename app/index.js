@@ -35,7 +35,12 @@ app.post('/tasks', (req, res) => {
   tasks.push(task);
   res.status(201).json(task);
 });
-// comentario
+app.delete('/tasks/:id', (req, res) => {
+  const index = tasks.findIndex(t => t.id === Number(req.params.id));
+  if (index === -1) return res.status(404).json({ error: 'Task não encontrada' });
+  const [deleted] = tasks.splice(index, 1);
+  res.json(deleted);
+});
 
 app.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);

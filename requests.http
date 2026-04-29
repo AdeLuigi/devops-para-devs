@@ -6,5 +6,8 @@ POST https://tasks-api-ralh.onrender.com/tasks
 Content-Type: application/json
 
 {
-  "title": "Minha nova task 2"
+  "title": "Minha nova task 3 teste"
 }
+
+### Deletar task por ID
+DELETE https://tasks-api-ralh.onrender.com/tasks/1
