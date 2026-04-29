@@ -1,7 +1,27 @@
 
 const express = require('express');
+const client = require('prom-client');
+
 const app = express();
 app.use(express.json());
+
+const register = new client.Registry();
+client.collectDefaultMetrics({ register });
+
+const httpRequestDuration = new client.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duração das requisições HTTP em segundos',
+  labelNames: ['method', 'route', 'status_code'],
+  registers: [register],
+});
+
+app.use((req, res, next) => {
+  const end = httpRequestDuration.startTimer();
+  res.on('finish', () => {
+    end({ method: req.method, route: req.path, status_code: res.statusCode });
+  });
+  next();
+});
 
 const tasks = [
   { id: 1, title: 'Aprender Docker', done: true },
@@ -15,7 +35,12 @@ app.post('/tasks', (req, res) => {
   tasks.push(task);
   res.status(201).json(task);
 });
-  
+
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
+
 if (require.main === module) {
   app.listen(3001, () => console.log('rodando na porta 3001'));
 }
