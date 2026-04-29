@@ -13,6 +13,15 @@ describe('GET /tasks', () => {
   });
 });
 
+describe('GET /metrics', () => {
+  it('retorna métricas no formato do Prometheus', async () => {
+    const res = await request(app).get('/metrics');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/text\/plain/);
+    expect(res.text).toContain('http_request_duration_seconds');
+  });
+});
+
 describe('POST /tasks', () => {
   it('cria uma tarefa e retorna 201 com id e done false', async () => {
     const res = await request(app).post('/tasks').send({ title: 'Estudar DevOps' });
