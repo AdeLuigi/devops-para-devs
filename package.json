@@ -1,0 +1,12 @@
+{
+  "name": "devops-para-devs",
+  "version": "1.0.0",
+  "description": "mini app que ensina alguns conceitos de devops para devs",
+  "main": "index.js",
+  "repository": "git@github.com:AdeLuigi/devops-para-devs.git",
+  "author": "Ademario Santana <ademario63@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
