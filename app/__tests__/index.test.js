@@ -2,24 +2,27 @@ const request = require('supertest');
 const app = require('../index');
 
 describe('GET /tasks', () => {
-  it('retorna lista vazia inicialmente', async () => {
+  it('retorna as tasks iniciais', async () => {
     const res = await request(app).get('/tasks');
     expect(res.status).toBe(200);
-    expect(res.body).toEqual([]);
+    expect(res.body).toEqual([
+      { id: 1, title: 'Aprender Docker', done: true },
+      { id: 2, title: 'Configurar CI/CD', done: true },
+      { id: 3, title: 'Fazer deploy no Render', done: false },
+    ]);
   });
 });
 
 describe('POST /tasks', () => {
-  it('cria uma tarefa e retorna 201', async () => {
-    const task = { title: 'Estudar DevOps' };
-    const res = await request(app).post('/tasks').send(task);
+  it('cria uma tarefa e retorna 201 com id e done false', async () => {
+    const res = await request(app).post('/tasks').send({ title: 'Estudar DevOps' });
     expect(res.status).toBe(201);
-    expect(res.body).toEqual(task);
+    expect(res.body).toEqual({ id: 4, title: 'Estudar DevOps', done: false });
   });
 
   it('tarefa criada aparece no GET /tasks', async () => {
     const res = await request(app).get('/tasks');
     expect(res.status).toBe(200);
-    expect(res.body).toContainEqual({ title: 'Estudar DevOps' });
+    expect(res.body).toContainEqual({ id: 4, title: 'Estudar DevOps', done: false });
   });
 });
