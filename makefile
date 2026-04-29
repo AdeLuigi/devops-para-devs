@@ -5,4 +5,4 @@ run:
 stop:
 	docker stop $(docker ps -q --filter ancestor=tasks-api)
 test:
-	cd app && npm ci && npm test
+	cd app && yarn install --frozen-lockfile && yarn test
